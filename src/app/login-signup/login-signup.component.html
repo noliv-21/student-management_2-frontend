@@ -1,0 +1,38 @@
+<!-- Main container with dark gradient background -->
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-950 relative overflow-hidden">
+    <!-- Gradient overlay -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(17,24,39,0.7),rgba(17,24,39,1))]"></div>
+
+    <!-- Animated background elements -->
+    <div class="absolute top-0 left-0 w-full h-full">
+        <div
+            class="absolute top-0 -left-4 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20">
+        </div>
+        <div
+            class="absolute top-0 -right-4 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20">
+        </div>
+        <div
+            class="absolute -bottom-8 left-20 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20">
+        </div>
+    </div>
+
+    <!-- Content structure -->
+    <div class="relative min-h-screen flex flex-col">
+        <!-- Header section -->
+        <div class="w-full bg-gray-800 bg-opacity-50 backdrop-blur-lg border-b border-gray-700">
+            <div class="max-w-7xl mx-auto px-4">
+                <app-header (modeChange)="onModeChange($event)"></app-header>
+            </div>
+        </div>
+
+        <!-- Main content area -->
+        <div class="flex-grow flex items-center justify-center p-4">
+            <div class="w-full max-w-4xl mx-auto">
+                <!-- Main content container -->
+                <div class="bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700">
+                    <app-user-cred [mode]="currentMode"></app-user-cred>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
