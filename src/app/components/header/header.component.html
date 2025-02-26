@@ -11,7 +11,7 @@
             </div>
 
             <!-- Auth buttons -->
-            <div class="flex items-center space-x-4">
+            <div *ngIf="showAuthButtons ; else logoutButton" class="flex items-center space-x-4">
                 <button (click)="switchToLogin()"
                     class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-700 transition duration-200">
                     Login
@@ -21,6 +21,12 @@
                     Signup
                 </button>
             </div>
+            <ng-template #logoutButton>
+                <button (click)="logout()"
+                    class="px-4 py-2 rounded-lg text-gray-300 hover:text-white hover:bg-gray-700 transition duration-200">
+                    Logout
+                </button>
+            </ng-template>
         </div>
     </div>
 </nav>
