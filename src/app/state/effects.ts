@@ -13,6 +13,47 @@ export class AuthEffects{
     private actions$=inject(Actions);
     private authService=inject(AuthService);
     private router=inject(Router);
+
+    initAuth$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(AuthActions.initAuth),
+            switchMap(() => {
+                const token = this.authService.getAccessToken();
+                console.log('Init effect - Found token:', !!token);
+                
+                if (token) {
+                    // Try to get current user with existing token
+                    return this.authService.fetchCurrentUser().pipe(
+                        map(user => {
+                            console.log('Init effect - User loaded:', user);
+                            return AuthActions.loginSuccess({ accessToken: token, user });
+                        }),
+                        catchError(error => {
+                            console.log('Init effect - Error loading user:', error);
+                            console.log('Init effect - Trying refresh token');
+                            // If token is invalid, try to refresh it
+                            return this.authService.refreshAccessToken().pipe(
+                                map(newToken => {
+                                    this.authService.setAccessToken(newToken);
+                                    console.log('Init effect - Token refreshed');
+                                    return AuthActions.refreshTokenSuccess({ accessToken: newToken });
+                                }),
+                                catchError(refreshError => {
+                                    console.log('Init effect - Failed to refresh token',refreshError);
+                                    this.authService.removeAccessToken();
+                                    return of(AuthActions.logoutSuccess());
+                                })
+                            );
+                        })
+                    );
+                }
+                console.log('Init effect - No token found, completing initialization');
+                // return of({ type: '[Auth] Init Complete' });
+                return of(AuthActions.initAuthComplete());
+            })
+        )
+    );
+
     login$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.login),
@@ -49,7 +90,7 @@ export class AuthEffects{
         this.actions$.pipe(
             ofType(AuthActions.refreshToken),
             switchMap(({role}) =>
-                this.authService.refreshToken(role).pipe(
+                this.authService.refreshAccessToken().pipe( // removed the role from argument for testing
                     map((response: any) => {
                         this.authService.setAccessToken(response.body.accessToken); // Store in memory
                         return AuthActions.refreshTokenSuccess({ accessToken: response.body.accessToken });

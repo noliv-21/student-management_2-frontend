@@ -1,11 +1,12 @@
 import { Component, Output, EventEmitter,OnInit,OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
-import { filter, Observable, Subscription } from 'rxjs';
+import { filter, Observable, Subscription, take } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { AuthState, currentUser } from '../../state/model';
 import { Store } from '@ngrx/store';
 import { selectCurrentUser } from '../../state/selectors';
+import * as AuthActions from '../../state/actions'
 
 @Component({
   selector: 'app-header',
@@ -45,10 +46,12 @@ export class HeaderComponent implements OnInit,OnDestroy {
     }
   }
 
-  logout(){                                      // We have to use the this.store.dispatch instead of direct service call
-    this.currentUser$.subscribe(user => {
+  logout(){
+    this.currentUser$.pipe(
+      take(1),
+    ).subscribe(user => {
       const role = user?.isAdmin ? 'admin' : 'user';
-      this.authService.logout(role);
+      this.store.dispatch(AuthActions.logout({role}));
     });
   }
 }

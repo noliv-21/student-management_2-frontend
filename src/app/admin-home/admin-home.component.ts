@@ -41,7 +41,7 @@ export class AdminHomeComponent implements OnInit {
   onUserAdded(){
     this.showAddUserToggle=false;
     this.addButtonText='Add New User';
-    this.store.dispatch(AdminActions.fetchUsers());
+    // this.store.dispatch(AdminActions.fetchUsers());
   }
 
   onEditUser(user:User){
@@ -67,9 +67,9 @@ export class AdminHomeComponent implements OnInit {
       if(result){
         this.store.dispatch(AdminActions.deleteUser({user}));
         // setTimeout(() => {
-          this.store.dispatch(AdminActions.fetchUsers());
+          // this.store.dispatch(AdminActions.fetchUsers());
         // },500);
-        this.cdr.detectChanges();
+        // this.cdr.detectChanges();
       }
     })
   }

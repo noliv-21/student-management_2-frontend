@@ -3,8 +3,8 @@
     <div class="relative group">
         <div class="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden ring-4 ring-purple-600 shadow-lg">
             <img 
-                [src]="user?.profileImage || profileImageUrl" 
-                alt="{{ user?.username }}'s profile image" 
+                [src]="user.profileImage || profileImageUrl" 
+                alt="{{ user.username }}'s profile image" 
                 class="w-full h-full object-cover"
             />
         </div>
@@ -20,8 +20,8 @@
     
     <!-- User Info Section -->
     <div class="text-center md:text-left">
-        <h2 class="text-2xl font-bold text-white">{{ user?.username || 'Guest' }}</h2>
-        <p class="text-sm text-gray-300 mb-4">{{ user?.email || 'No email provided' }}</p>
+        <h2 class="text-2xl font-bold text-white">{{ user.username || 'Guest' }}</h2>
+        <p class="text-sm text-gray-300 mb-4">{{ user.email || 'No email provided' }}</p>
         
         <!-- File Upload Controls (Initially Hidden) -->
         <div class="upload-controls mt-2">

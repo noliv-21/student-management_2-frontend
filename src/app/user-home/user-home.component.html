@@ -30,7 +30,14 @@
             <div class="w-full max-w-4xl mx-auto">
                 <!-- Main content container -->
                 <div class="bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-2xl p-8 border border-gray-700">
-                    <app-user-profile [user]="user$ | async"></app-user-profile>
+                    <ng-container *ngIf="user$ | async as user ; else loading">
+                        <app-user-profile [user]="user"></app-user-profile>
+                    </ng-container>
+                    <ng-template #loading>
+                        <div class="text-center">
+                          <p>Loading user profile...</p>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>

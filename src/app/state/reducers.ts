@@ -19,7 +19,7 @@ export const initialAdminState:AdminState={
 export const authReducer = createReducer(
     initialState,
     on(AuthActions.login, (state) => ({ ...state, loading: true, error: null })),
-    on(AuthActions.loginSuccess, (state, { accessToken,user }) => ({ ...state, accessToken,user,role: user.isAdmin ? 'admin' as const : 'user' as const, loading: false })),
+    on(AuthActions.loginSuccess, (state, { accessToken,user }) => ({ ...state, accessToken,user,error:null,role: user.isAdmin ? 'admin' as const : 'user' as const, loading: false })),
     on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error, loading: false })),
     
     on(AuthActions.refreshToken, (state) => ({ ...state, loading: true, error: null })),

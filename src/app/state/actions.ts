@@ -1,6 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 import { User,currentUser } from './model';
 
+export const initAuth = createAction('[Auth] Initialize Auth');
+export const initAuthComplete = createAction('[Auth] Initialize Auth Complete');
+
 export const login = createAction('[Auth] Login', props<{ credentials: any; role: 'user' | 'admin' }>());
 export const loginSuccess = createAction('[Auth] Login Success', props<{ accessToken: string,user:currentUser }>());
 export const loginFailure = createAction('[Auth] Login Failure', props<{ error: any }>());

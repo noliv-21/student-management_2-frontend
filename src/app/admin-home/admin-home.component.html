@@ -58,8 +58,11 @@
                             <div *ngFor="let user of users" class="user-card mb-4 p-4 bg-gray-700 bg-opacity-40 rounded-xl border border-gray-600 hover:border-indigo-500 transition-all duration-300">
                                 <div *ngIf="editingUser !== user.username; else editUser" class="flex items-center space-x-4">
                                     <div class="flex-shrink-0">
-                                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">
-                                            {{ user.username.charAt(0).toUpperCase() }}
+                                        <div class="w-12 h-12 rounded-full overflow-hidden">
+                                            <img *ngIf="user.profileImage" [src]="user.profileImage" alt="{{ user.username }}" class="w-full h-full object-cover">
+                                            <div *ngIf="!user.profileImage" class="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                                                {{ user.username.charAt(0).toUpperCase() }}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="flex-1 min-w-0">

@@ -38,16 +38,21 @@ export const selectAuthLoading = createSelector(
 );
 
 export const selectIsLoggedIn = createSelector(
-    selectAccessToken,
-    (accessToken) => !!accessToken
+    selectAuthState,
+    (state) => !!state.accessToken && !!state.user
 );
 
 export const selectAllUsers = createSelector(
     selectAdminState,
-    (state:AdminState)=> state.users 
+    (state: AdminState) => state.users
 );
 
 export const selectSingleUser = createSelector(
     selectAdminState,
-    (state:AdminState,props:{email:string})=> state.users.find(user=>user.email===props.email)
+    (state: AdminState, props: { email: string }) => state.users.find(user => user.email === props.email)
+);
+
+export const selectIsAdmin = createSelector(
+    selectAuthState,
+    (state) => !!state.user && state.user.isAdmin
 );

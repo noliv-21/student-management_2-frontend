@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input,OnInit } from '@angular/core';
 import { currentUser } from '../../state/model';
 import { AuthService } from '../../services/auth.service';
 import { CloudinaryService } from '../../services/cloudinary.service';
@@ -9,12 +9,18 @@ import { CloudinaryService } from '../../services/cloudinary.service';
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.scss'
 })
-export class UserProfileComponent {
+export class UserProfileComponent implements OnInit {
   @Input() user!:currentUser;
   selectedFile: File | null = null;
   profileImageUrl:string | null = null;
 
   constructor(private cloudinaryService:CloudinaryService,private authService:AuthService){}
+
+  ngOnInit():void{
+    if (this.user && this.user.profileImage) {
+      this.profileImageUrl = this.user.profileImage;
+    }
+  }
   
   onFileSelected(event:any){
     this.selectedFile = event.target.files[0];
